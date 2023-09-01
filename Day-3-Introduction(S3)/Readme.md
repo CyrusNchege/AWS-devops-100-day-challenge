@@ -29,6 +29,7 @@
 
 9. Use Cases
     - [Use-Case-1: Uploading files](/Day-3-Introduction(S3)/Use-Cases-1(Uploading-file)/Readme.md)
+   - [Use-Case-2: Hosting a static website](/Day-3-Introduction(S3)/Use-Cases-2(Hosting-a-static-website)/Readme.md)
 
 ---
 
