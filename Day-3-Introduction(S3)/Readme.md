@@ -113,3 +113,6 @@ Set up event notifications to trigger actions (e.g., Lambda functions) when obje
 
 - [Amazon S3 Documentation](https://docs.aws.amazon.com/s3)
 
+## 9. Use Cases
+- [Use-Case-1: Uploading files](/Day-3-Introduction(S3)/Use-Cases-1(Uploading-file)/Readme.md)
+
