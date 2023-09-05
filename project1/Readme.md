@@ -10,6 +10,9 @@ Design and implement a solution that can help an organization improve its docume
  ***
 # Solution steps
 
+## Design the Solution
+![image](/project1/projectimages/Design.png)
+
 
 ### 1. Create an Amazon S3 Bucket
 - Search for "S3" in the AWS Management Console.
@@ -93,6 +96,7 @@ def lambda_handler(event, context):
     }
 ```
 - Replace `YOUR_SNS_TOPIC_ARN` with the ARN of the SNS topic you created in the previous step.
+
 ### 5. Create an Amazon S3 Event Notification
 - Search for "S3" in the AWS Management Console.
 - Click the name of your bucket.
@@ -105,6 +109,7 @@ def lambda_handler(event, context):
 - Select the Lambda function you created in the previous step.
 - Click "Save changes."
 
+
 ### 6. Test the Solution
 - Upload a document to your S3 bucket.
 - Check your email for the word count notification.
@@ -112,6 +117,7 @@ def lambda_handler(event, context):
 ![image](/project1/projectimages/Email.png)
 
 ***
+
 Congratulations! You have successfully implemented a solution that can help an organization improve its document management system.
 
 
