@@ -17,6 +17,8 @@ Design and implement a solution that can help an organization improve its docume
 - Enter a unique and meaningful name for your bucket.
 - Choose a region for your bucket (select one geographically close to your users for better performance).
 - Configure other settings as needed (e.g., versioning, logging, and access control). Ensure that you set up appropriate permissions to allow writers to upload documents.
+- Click "Create bucket."
+![image](/project1/projectimages/BucketCreate.png)
 
 ### 2. Create an Amazon Simple Notification Service (SNS) Topic
 - Search for "SNS" in the AWS Management Console.
@@ -44,37 +46,53 @@ Design and implement a solution that can help an organization improve its docume
 - Enter a name for your role.
 - Click "Create role."
 
+(If you do not want to use the AmazonS3FullAccess and AmazonSNSFullAccess policies, you can give AdminstratratorAccess to the role.) 
+
+Note: This is not recommended for production environments.
+
+
 ### 4. Create an AWS Lambda Function
 - Search for "Lambda" in the AWS Management Console.
 - Click the "Create function" button.
 - Select "Author from scratch."
 - Enter a name for your function.
-- Select a runtime (e.g., Python 3.8).
+- Select a runtime (e.g., Python 3.11).
+![image](/project1/projectimages/functioncreate.png)
 - Select the IAM role you created in the previous step.
 - Click "Create function."
 - In the "Function code" section, paste the code and deploy the function.
 ```python
 import boto3
+import json
+import re
 
-def count_words(event, context):
-    s3 = boto3.resource("s3")
-    bucket = s3.Bucket(event["bucket"])
-    key = event["key"]
+s3 = boto3.client('s3')
+sns = boto3.client('sns')
 
-    file = bucket.Object(key).get()
-    text = file["Body"].read().decode("utf-8")
+def lambda_handler(event, context):
+    # Get the S3 bucket and object key from the Lambda event
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
 
-    word_count = len(text.split(" "))
+    # Download the file from S3
+    response = s3.get_object(Bucket=bucket, Key=key)
+    content = response['Body'].read().decode('utf-8')
 
-    return {"word_count": word_count}
+    # Count words using a simple regex
+    word_count = len(re.findall(r'\b\w+\b', content))
+
+    # Publish the word count to SNS
+    sns.publish(
+        TopicArn='YOUR_SNS_TOPIC_ARN',
+        Message=f'Word count for {key}: {word_count}'
+    )
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Word count processed and notification sent.')
+    }
 ```
-- In the "Designer" section, click "Add trigger."
-- Select "S3" as the trigger type.
-- Select the S3 bucket you created in the previous step.
-- Select "All object create events" as the event type.
-- Click "Add."
-- Click "Save."
-
+- Replace `YOUR_SNS_TOPIC_ARN` with the ARN of the SNS topic you created in the previous step.
 ### 5. Create an Amazon S3 Event Notification
 - Search for "S3" in the AWS Management Console.
 - Click the name of your bucket.
@@ -82,10 +100,19 @@ def count_words(event, context):
 - Click the "Events notifications" tab.
 - Click "Create event notification."
 - Enter a name for your event notification.
-- Select "All object create events" as the event type.
-- Select "Lambda function" as the destination type.
+- Select "All object create events."
+- Select "Lambda function" as the destination.
 - Select the Lambda function you created in the previous step.
-- Click "Save."
+- Click "Save changes."
+
+### 6. Test the Solution
+- Upload a document to your S3 bucket.
+- Check your email for the word count notification.
+
+![image](/project1/projectimages/Email.png)
+
+***
+Congratulations! You have successfully implemented a solution that can help an organization improve its document management system.
 
 
 
