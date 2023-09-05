@@ -18,12 +18,41 @@ Design and implement a solution that can help an organization improve its docume
 - Choose a region for your bucket (select one geographically close to your users for better performance).
 - Configure other settings as needed (e.g., versioning, logging, and access control). Ensure that you set up appropriate permissions to allow writers to upload documents.
 
-### 2. Create an AWS Lambda Function
+### 2. Create an Amazon Simple Notification Service (SNS) Topic
+- Search for "SNS" in the AWS Management Console.
+- Click the "Create topic" button.
+- Give your topic a name and display name.
+- Click "Create topic."
+- Click the name of your topic.
+- Click "Create subscription."
+- Select "Email" as the protocol.
+- Enter your email address.
+- Click "Create subscription."
+- Check your email and click the link to confirm your subscription.
+
+
+### 3. Create an IAM Role
+- Search for "IAM" in the AWS Management Console.
+- Click "Roles" in the left navigation bar.
+- Click the "Create role" button.
+- Select "Lambda" as the trusted entity.
+- Click "Next: Permissions."
+- Search for "S3" in the search bar.
+- Select the "AmazonS3FullAccess" policy.
+- Search for "SNS" in the search bar.
+- Select the "AmazonSNSFullAccess" policy.
+- Enter a name for your role.
+- Click "Create role."
+
+### 4. Create an AWS Lambda Function
 - Search for "Lambda" in the AWS Management Console.
 - Click the "Create function" button.
-- Choose "Author from scratch."
-- Give your Lambda function a name and select the Python 3.8 runtime.
-- In the "Function code" section, replace the default code with 
+- Select "Author from scratch."
+- Enter a name for your function.
+- Select a runtime (e.g., Python 3.8).
+- Select the IAM role you created in the previous step.
+- Click "Create function."
+- In the "Function code" section, paste the code and deploy the function.
 ```python
 import boto3
 
@@ -39,29 +68,25 @@ def count_words(event, context):
 
     return {"word_count": word_count}
 ```
+- In the "Designer" section, click "Add trigger."
+- Select "S3" as the trigger type.
+- Select the S3 bucket you created in the previous step.
+- Select "All object create events" as the event type.
+- Click "Add."
+- Click "Save."
 
-- Configure the Lambda function to use an existing or new execution role (which you will create in step 4).
+### 5. Create an Amazon S3 Event Notification
+- Search for "S3" in the AWS Management Console.
+- Click the name of your bucket.
+- Click the "Properties" tab.
+- Click the "Events notifications" tab.
+- Click "Create event notification."
+- Enter a name for your event notification.
+- Select "All object create events" as the event type.
+- Select "Lambda function" as the destination type.
+- Select the Lambda function you created in the previous step.
+- Click "Save."
 
-### 3. Create an Amazon Simple Notification Service (SNS) Topic
-- Search for "SNS" in the AWS Management Console.
-- Click the "Create topic" button.
-- Give your topic a name and display name.
-- Click "Create topic."
-
-### 4. Create an IAM Role
-- Search for "IAM" in the AWS Management Console.
-- Click "Roles" in the left navigation pane and then "Create role."
-- Select "Lambda" as the trusted entity.
-- In the "Permissions" step, attach policies that grant your Lambda function the necessary permissions. You can create a custom policy with the permissions you specified (s3:GetObject, s3:PutObject, sns:Publish).
-- Review and name the role (e.g., "DocumentManagementRole").
-
-### 5. Attach IAM Role to Lambda Function
-- After creating the IAM role, go back to your Lambda function in the Lambda console.
-- In the "Function overview" section, scroll down to the "Execution role" and click "Edit."
-- Attach the IAM role you created (DocumentManagementRole) to the Lambda function.
-
-## Conclusion
-With these steps completed, your solution is set up to count words in documents uploaded to the S3 bucket and send notifications to the team leader through the SNS topic. Ensure that you've properly configured the S3 bucket's event trigger to invoke the Lambda function when new objects (documents) are created in the bucket.
 
 
 
