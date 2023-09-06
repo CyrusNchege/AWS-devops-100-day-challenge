@@ -11,7 +11,7 @@ Design and implement a solution that can help an organization improve its docume
 # Solution steps
 
 ## Design the Solution
-![image](/project1/projectimages/Design.png)
+![image](/project1AWSwordCount/projectimages/Design.png)
 
 
 ### 1. Create an Amazon S3 Bucket
@@ -21,7 +21,29 @@ Design and implement a solution that can help an organization improve its docume
 - Choose a region for your bucket (select one geographically close to your users for better performance).
 - Configure other settings as needed (e.g., versioning, logging, and access control). Ensure that you set up appropriate permissions to allow writers to upload documents.
 - Click "Create bucket."
-![image](/project1/projectimages/BucketCreate.png)
+![image](/project1AWSwordCount/projectimages/BucketCreate.png)
+
+### Cross Origin Resource Sharing (CORS) Configuration
+- Click the name of your bucket.
+- Click the "Permissions" tab.
+- Click the "CORS configuration" button.
+- Paste the following configuration into the editor and click "Save."
+```json
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "PUT"
+        ],
+        "AllowedOrigins": [
+            "http://localhost:3000" //replace with your own domain
+        ],
+        "ExposeHeaders": []
+    }
+]
+```
 
 ### 2. Create an Amazon Simple Notification Service (SNS) Topic
 - Search for "SNS" in the AWS Management Console.
@@ -60,7 +82,7 @@ Note: This is not recommended for production environments.
 - Select "Author from scratch."
 - Enter a name for your function.
 - Select a runtime (e.g., Python 3.11).
-![image](/project1/projectimages/functioncreate.png)
+![image](/project1AWSwordCount/projectimages/functioncreate.png)
 - Select the IAM role you created in the previous step.
 - Click "Create function."
 - In the "Function code" section, paste the code and deploy the function.
@@ -114,12 +136,9 @@ def lambda_handler(event, context):
 - Upload a document to your S3 bucket.
 - Check your email for the word count notification.
 
-![image](/project1/projectimages/Email.png)
+![image](/project1AWSwordCount/projectimages/Email.png)
 
 ***
 
 Congratulations! You have successfully implemented a solution that can help an organization improve its document management system.
-
-
-
 
