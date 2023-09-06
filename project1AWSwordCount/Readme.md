@@ -24,6 +24,8 @@ Design and implement a solution that can help an organization improve its docume
 ![image](/project1AWSwordCount/projectimages/BucketCreate.png)
 
 ### Cross Origin Resource Sharing (CORS) Configuration
+This step is required if you want to allow users to upload documents directly to your S3 bucket from a web browser.
+
 - Click the name of your bucket.
 - Click the "Permissions" tab.
 - Click the "CORS configuration" button.
