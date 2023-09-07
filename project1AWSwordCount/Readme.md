@@ -32,19 +32,14 @@ This step is required if you want to allow users to upload documents directly to
 - Paste the following configuration into the editor and click "Save."
 ```json
 [
-    {
-        "AllowedHeaders": [
-            "*"
-        ],
-        "AllowedMethods": [
-            "PUT"
-        ],
-        "AllowedOrigins": [
-            "http://localhost:3000" //replace with your own domain
-        ],
-        "ExposeHeaders": []
-    }
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["PUT"],
+    "AllowedOrigins": ["http://localhost:3000"], //change this to your website
+    "ExposeHeaders": []
+  }
 ]
+
 ```
 
 ### 2. Create an Amazon Simple Notification Service (SNS) Topic
