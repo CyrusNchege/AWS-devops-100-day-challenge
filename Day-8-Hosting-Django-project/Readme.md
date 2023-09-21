@@ -19,7 +19,7 @@ If you don't have an AWS account, you can create one at [AWS](https://aws.amazon
 
 3. **Choose an Amazon Machine Image (AMI):**
 
-   - In the "Choose an Amazon Machine Image (AMI)" step, select "Ubuntu Server 20.04 LTS (HVM), SSD Volume Type." This is a reliable choice for hosting a variety of applications.
+   - In the "Choose an Amazon Machine Image (AMI)" step, select "Ubuntu Server 22.04 LTS (HVM), SSD Volume Type." This is a reliable choice for hosting a variety of applications.
 
 4. **Select an Instance Type:**
 
@@ -83,18 +83,24 @@ After launching the EC2 instance, you can connect to it using SSH. You will need
 Install required software packages on the EC2 instance.
 
 ```
-sudo apt update
+sudo apt-get update
 
-sudo apt upgrade
+sudo apt-get upgrade -y
+```
 
-# Install Python 3 and pip
-sudo apt install python3 python3-pip -y
+```
+# Install virtualenv
+sudo apt-get install python3-venv
+
+python3 -m venv env
+
+source env/bin/activate
 
 # Install Git
 sudo apt install git -y
 
 # Install NGINX
-sudo apt install nginx -y
+sudo apt-get install nginx -y
 ```
 
 # Step 5: Clone the Django Project
@@ -109,19 +115,28 @@ Replace `username` with your GitHub username and `project` with the name of your
 ```
 cd project
 ```
-create a virtual environment and activate it.
-
-```
-python3 -m venv venv
-
-source venv/bin/activate
-```
 
 Install the required packages.
 
 ```
 pip install -r requirements.txt
 ```
+
+make migrations and migrate.
+
+```
+python manage.py makemigrations
+
+python manage.py migrate
+```
+
+Collect static files.
+
+```   
+python manage.py collectstatic
+```
+
+
 install gunicorn.
 
 ```
@@ -133,7 +148,7 @@ Also install supervisor.
 Supervisor is a process control system that allows you to monitor and control a number of processes on Linux operating systems.
 
 ```
-pip install supervisor
+sudo apt-get install supervisor
 ```
 
 
@@ -147,6 +162,7 @@ ALLOWED_HOSTS = ['<public-ip-address>', '<domain-name>']
 ```
 Replace `<public-ip-address>` with the public IP address of your EC2 instance and `<domain-name>` with your domain name.
 
+
 # Step 7: Configure Guincorn and Supervisor
 
 create a file ginicorn.conf in /etc/supervisor/conf.d/ directory.
@@ -159,9 +175,9 @@ Add the following lines to the file.
 
 ```
 
-program:gunicorn]
+[program:gunicorn]
 directory=/home/ubuntu/project
-command=/home/ubuntu/project/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/project/project.sock project.wsgi:application
+command=/home/ubuntu/Django-REST-CRUD/env/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/project/project.sock project.wsgi:application
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/gunicorn/gunicorn.err.log
@@ -184,15 +200,31 @@ sudo supervisorctl reread
 
 sudo supervisorctl update
 
-sudo supervisorctl restart 
+sudo supervisorctl restart all
 ```
 
 # Step 8: Configure NGINX
+Alter nginx.conf file.
+
+```
+sudo nano /etc/nginx/nginx.conf
+```
+
+Change the following lines in the file.
+
+```
+user www-data;
+```
+to
+```
+user root;
+```
+
 
 create a file project.conf in /etc/nginx/sites-available/ directory.
 
 ```
-sudo nano /etc/nginx/sites-available/project.conf
+sudo nano /etc/nginx/sites-available/django.conf
 ```
 you can name the file anything you want.
 
@@ -206,12 +238,13 @@ server {
 	location / {
 
 		include proxy_params;
-		proxy_pass http://unix:/home/ubuntu/elevate/app.sock;
+		proxy_pass http://unix:/home/ubuntu/project/project.sock;
 	}
 }
 ``` 
 
 Replace `<public-ip-address>` with the public IP address of your EC2 instance and `<domain-name>` with your domain name.
+Also replace the path of the `project`.sock file with your `project`.sock file path.
 
 Enable the site.
 
