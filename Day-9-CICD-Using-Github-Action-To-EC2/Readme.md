@@ -287,42 +287,41 @@ name: Django CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-    build:
-    
-        runs-on: ubuntu-latest
-    
-        steps:
-        - uses: actions/checkout@v2
-        - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-            python-version: 3.8
-        - name: Install dependencies
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Test with pytest
+      run: |
+        python manage.py test
+
+    - name: Deploy to EC2
         run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-        - name: Test with pytest
-        run: |
-            python manage.py test
-        - name: Deploy to EC2
-        uses: appleboy/scp-action@master
-        with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.KEY }}
-            source: "."
-            target: "/home/ubuntu/project"
-            args: "-o StrictHostKeyChecking=no"
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd /home/ubuntu/Django-REST-CRUD && git pull && source /home/ubuntu/Django-REST-CRUD/env/bin/activate && pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && sudo supervisorctl restart all"
 ```
 
 To manage secrets, go to your project repository on GitHub and click on Settings > Secrets > New repository secret.
 
 Create the following secrets:
+- SSH_PRIVATE_KEY - The private key of your EC2 instance.
 
 - HOST: The public IP address of your EC2 instance.
 
