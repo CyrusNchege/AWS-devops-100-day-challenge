@@ -1,5 +1,9 @@
 #  CICD using Github Action to EC2
 
+## Introduction
+Github Actions is a CI/CD tool that allows you to automate your software development workflows. You can use Github Actions to build, test, and deploy your code to any server.
+
+
 In this project I will show you how to deploy a simple Django application to EC2 using Github Action.
 
 For the web server I will use Nginx and for the application server I will use Gunicorn.
