@@ -49,6 +49,10 @@ In this example, we will create a simple Django application and deploy it to a D
    pip install django
    ```
 
+   ```
+   pip freeze > requirements.txt
+   ```
+
 4. **Create a Django project:**
 
    - Create a Django project called "myproject".
