@@ -131,6 +131,7 @@ In this example, we will create a simple Django application and deploy it to a D
 ### Step 2: Create a Dockerfile
 Docker File is a text file used to define the instructions for building a Docker image. It specifies the base image to use, the commands to run, and the files to copy into the image.
 
+Note: The Dockerfile must be named `Dockerfile` with no file extension.
 
 
 Example Dockerfile:
