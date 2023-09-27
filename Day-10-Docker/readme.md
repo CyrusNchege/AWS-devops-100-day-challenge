@@ -167,6 +167,11 @@ The `-t` flag is used to tag the image with a name. In this case, we are tagging
 
 ### Step 4: Run the Docker container
 
+### What is a Docker container?
+
+A Docker container is a runnable instance of a Docker image. It is created from a Docker image and can be started, stopped, moved, and deleted. It is also isolated from other containers and the host machine.
+
+
 Run the Docker container using the following command:
 
 ```python
