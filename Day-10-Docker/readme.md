@@ -159,7 +159,7 @@ The `-t` flag is used to tag the image with a name. In this case, we are tagging
 Run the Docker container using the following command:
 
 ```python
-docker run -d -p 8000:8000 myproject
+docker run --name myproject -d -p 8000:8000 myproject
 ```
 
 The `-d` flag is used to run the container in detached mode. The `-p` flag is used to map the host port to the container port. In this case, we are mapping port 8000 on the host to port 8000 on the container.
