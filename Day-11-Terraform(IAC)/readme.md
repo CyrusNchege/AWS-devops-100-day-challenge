@@ -70,39 +70,9 @@ Ensure you have the following:
     cd terraform-aws
     ```
     - Create a file with the name `main.tf` and add the following code to it.
-        ```
-            terraform {
 
-            required_providers {
-                aws = {
-                    source = "hashicorp/aws"
-                    version = "~> 4.16" 
-                }
-            }
-            required_version = ">= 1.2.0"
+    [main.tf](/main.tf)
 
-        }
-
-        provider "aws" {
-            region = "us-west-2"
-
-        }
-
-        resource "aws_instance" "TestTf" {
-            ami = "ami-0f3769c8d8429942f"
-            instance_type = "t2.micro"
-
-            tags = {
-                Name = "TestTf"
-            }
-        }
-
-        ``` 
-        For the `ami` value, you can use any AMI ID that is available in your region.
-
-        Also for the `region` value, you can use any region you want.
-
-        the `tag` block is optional, you can remove it if you want.
 
     - Run `terraform init` to initialize the working directory.
 
@@ -110,6 +80,18 @@ Ensure you have the following:
 
     - Run `terraform apply` to execute the plan.
 
+    This will create an EC2 instance on AWS.
+    ![EC2 instance](../Images/terraform/apply.png)
+
     - Run `terraform destroy` to destroy all the resources created by Terraform.
 
+    ![EC2 instance](../Images/terraform/destroy.png)
+
     
+Congratulations! You have successfully created and destroyed an EC2 instance using Terraform.
+
+# Conclusion
+
+Terraform is a great tool for managing infrastructure as code. It is easy to use and can be used to provision infrastructure across multiple public cloud providers. It also has a lot of features that make it easy to manage infrastructure as code.
+
+I will be writing more on Terraform and diffrent customizations that can be done with it.
