@@ -2,7 +2,7 @@
 
 This is a continuation of the previous [Terraform](../Day-11-Terraform(IAC) ) challenge. 
 
-For the last challenge, we created a simple Terraform file that created a single EC2 instance. In this challenge, we will be creating a more terraform file that will use variables.
+For the last challenge, we created a simple Terraform file that created a single EC2 instance. In this challenge, we will be creating a more terraform file that will use variables and outputs.
 
 ## Why use variables?
 
@@ -95,11 +95,63 @@ If it is for testing purposes, you can destroy the instance by running the follo
 terraform destroy
 ```
 
-Congratulations! You have successfully created a variable and used it in your terraform file.
+
+# Outputs
+
+Outputs are a way to print out the values of attributes of a resource that are useful to the user.
+
+## Creating an output
+
+In your terraform working directory, create a file called `outputs.tf`. This file will contain all the outputs that you will be using in your terraform file.
+
+
+In the `outputs.tf` file, add the following code:
+
+```hcl
+output "instance_id" {
+  description = "ID of the EC2 instance"
+  value       = aws_instance.app_server.id
+}
+
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.app_server.public_ip
+}
+```
+
+Also included in this Day-12 folder.
+
+You have to change the `aws_instance.app_server` to the name of your resource.
+
+The above code will print out the instance id and the public ip address of the instance.
+
+## Applying the outputs
+
+Now that you have created an output, you can now apply the changes.
+
+Run the following command:
+
+```bash
+terraform apply
+```
+
+This will create a new instance  and print out the instance id and the public ip address of the instance.
+
+[![third](output.png)
+
+You can also run the following command to print out the outputs:
+
+```bash
+terraform output
+```
+
+Congratulations! You have successfully created a variable and used it in your terraform file. You have also created an output that prints out the instance id and the public ip address of the instance.
+
+Note: Remember to destroy the instance after you are done testing.
 
 ## Conclusion
 
-In this challenge, you have learned how to create a variable and use it in your terraform file. You have also learned how to change the value of the variable.
+In this challenge, we have learned how to create a variable and use it in our terraform file. We have also learned how to create an output that prints out the instance id and the public ip address of the instance.
 
 
 
