@@ -71,7 +71,7 @@ Ensure you have the following:
     ```
     - Create a file with the name `main.tf` and add the following code to it.
 
-    [main.tf](/main.tf)
+    [main.tf](https://github.com/CyrusNchege/AWS-devops-100-day-challenge/blob/main/Day-11-Terraform(IAC)/main.tf)
 
 
     - Run `terraform init` to initialize the working directory.
