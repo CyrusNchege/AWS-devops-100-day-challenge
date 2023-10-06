@@ -195,3 +195,7 @@ You will be redirected to the Wordpress dashboard.
 
 In your browser, go to the public_ip_address/wordpress. You will see the Wordpress site.
 
+
+You can now start creating your own Wordpress site.
+
+For Domain Name, you can use Route 53.
