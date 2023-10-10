@@ -62,3 +62,30 @@ For this challenge, we will be using Jenkins on Docker. To install Jenkins on Do
 11. You should see the Jenkins dashboard.
 
 ### Creating a Jenkins Pipeline
+
+project (Hello World)
+
+1. Click hello job
+- click new item
+- name the project
+- select freestyle project and click ok
+
+2. Configure the project
+- click on configure
+- click on build
+- click on add build step
+- select execute shell
+- type in the command `echo "Hello World"`
+- click on save
+
+3. Build the project
+- click on build now
+- click on the build number
+- click on console output
+- you should see the output `Hello World`
+
+The above is a simple example of a Jenkins project. In the next challenge, we will be creating a Jenkins pipeline.
+
+
+
+
