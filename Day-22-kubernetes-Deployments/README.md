@@ -69,7 +69,8 @@ kubectl get pods
 
 #### Create a Deployment using the kubectl create command
 ```
-kubectl create deployment nginx-deployment --image=nginx
+kubectl create deployment nginx-deployment --image=nginx --port=80
+ --replicas=2
 ```
 
 ## Update the deployment
