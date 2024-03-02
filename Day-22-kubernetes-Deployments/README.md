@@ -66,6 +66,12 @@ kubectl get replicasets
 kubectl get pods
 ```
 
+
+#### Create a Deployment using the kubectl create command
+```
+kubectl create deployment nginx-deployment --image=nginx
+```
+
 ## Update the deployment
 - Update the image of the application to version 1.16.1
 ```

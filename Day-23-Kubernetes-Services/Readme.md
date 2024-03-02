@@ -51,6 +51,11 @@ kubectl get services
 kubectl describe service my-service
 ```
 
+- Creating a service using the kubectl expose command
+```
+kubectl expose deployment my-app --port=80 --target-port=80 --name=my-service --type=ClusterIP
+```
+
 ## Creating a NodePort Service
 - Create a service yaml file
 ```
@@ -81,6 +86,11 @@ kubectl create -f my-service.yaml
 kubectl get services
 ```
 
+- Creating a service using the kubectl expose command
+```
+kubectl expose deployment my-app --port=80 --target-port=80 --name=my-service --type=NodePort
+```
+
 ## Creating a LoadBalancer Service
 - Create a service yaml file
 ```
@@ -108,6 +118,10 @@ kubectl create -f my-service.yaml
 ```
 kubectl get services
 ```
+- Creating a service using the kubectl expose command
+```
+kubectl expose deployment my-app --port=80 --target-port=80 --name=my-service --type=LoadBalancer
+```
 
 ## Creating an ExternalName Service
 - Create a service yaml file
@@ -131,6 +145,11 @@ kubectl create -f my-service.yaml
 - View the service
 ```
 kubectl get services
+```
+
+- Creating a service using the kubectl expose command
+```
+kubectl expose deployment my-app --port=80 --target-port=80 --name=my-service --type=ExternalName --external-name=my-service.example.com
 ```
 
 ## Deleting a Service
