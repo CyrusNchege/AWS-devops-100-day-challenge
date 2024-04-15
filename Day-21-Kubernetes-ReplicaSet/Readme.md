@@ -81,6 +81,21 @@ To delete a ReplicaSet, use the following command.
 kubectl delete replicaset my-replicaset
 ```
 
+Creating a ReplicaSet using the command line:
+
+```bash
+kubectl create replicaset my-replicaset --replicas=3 --selector="app=my-app,type=front-end" --template --name=nginx-container --image=nginx
+```
+Scaling a ReplicaSet using the command line:
+
+```bash
+kubectl scale replicaset my-replicaset --replicas=5
+```
+Or you can edit the ReplicaSet definition file and change the number of replicas.
+
+
+
+
 ## Conclusion
 
 In this section, we learned about ReplicaSet. We also learned about the difference between ReplicaSet and Replication Controller. In the next section, we will learn about Deployment.
