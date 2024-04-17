@@ -75,7 +75,10 @@ Image Specification - This is a specification that defines how a container image
 
 Runtime Specification - This is a specification that defines how a container should be run. It defines the runtime environment for the container, including the filesystem, environment variables, and other runtime settings.
 
-
-
+# Generating Manifests
+When you want to generate a manifest file for a resource, you can use the following command:
+```
+kubectl create deployment my-deployment --image=nginx --dry-run=client -o yaml > my-deployment.yaml
+```
 
 
