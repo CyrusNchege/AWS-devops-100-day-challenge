@@ -55,4 +55,30 @@ This is a tool that allows us to run commands to interact with the cluster. It i
 - `kubectl get pods -o wide` - This command lists all the pods in the cluster along with the node on which they are running.
 - `kubectl get pods -o wide --sort-by=.spec.nodeName` - This command lists all the pods in the cluster along with the node on which they are running, sorted by node name.
 
+Other helpful commands include:
+When you want to get pod defination yaml file of an already running pod, you can use the following command:
+```
+kubectl get pod <pod-name> -o yaml > my-pod.yaml
+```
+
+# Containers in Kubernetes
+In the beginning, Kubernetes was designed to run Docker containers. But now it supports other container runtimes like containerd, CRI-O, etc.
+
+The above was enabled by introduction of Container Runtime Interface (CRI),CRI allowed any vendor to run as a container runtime in Kubernetes
+
+They however have to comply with the OCI (Open Container Initiative) standards.
+OCI consists of two specifications:
+- Image Specification
+- Runtime Specification
+
+Image Specification - This is a specification that defines how a container image should be built. It defines the format of the image and the metadata that should be included in the image.
+
+Runtime Specification - This is a specification that defines how a container should be run. It defines the runtime environment for the container, including the filesystem, environment variables, and other runtime settings.
+
+# Generating Manifests
+When you want to generate a manifest file for a resource, you can use the following command:
+```
+kubectl create deployment my-deployment --image=nginx --dry-run=client -o yaml > my-deployment.yaml
+```
+
 
